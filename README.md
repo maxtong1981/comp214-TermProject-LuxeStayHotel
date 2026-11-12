@@ -77,3 +77,19 @@ This repository contains the database design, SQL scripts, website source code, 
 - **Task board:** To be added
 - **Submission deadline:** Confirm on the LMS
 - **Presentation date:** Confirm on the LMS
+
+## Planning Documents
+
+- [Existing work and remaining verification](docs/progress-review.md)
+
+- [Planning index](docs/README.md)
+- [Project scope and milestones](docs/project-plan.md)
+- [Task tracker](docs/tasks.md)
+- [Assignment requirements checklist](docs/requirements-checklist.md)
+- [Work preferences and verified contributions](docs/contributions.md)
+- [Database work guide](database/README.md)
+- [Database design work plan](database/design/README.md)
+- [SQL script guide](database/scripts/README.md)
+- [Website work guide](website/README.md)
+- [Execution evidence guide](docs/evidence/README.md)
+- [Final submission guide](docs/submission/README.md)
