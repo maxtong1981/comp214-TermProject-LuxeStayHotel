@@ -1,6 +1,63 @@
 # LuxeStay — COMP214 Term Project
 
 This repository contains the database design, SQL scripts, website source code, and supporting documents for our four-person group project.
+## Deliverables
+
+| # | Deliverable | Filename pattern | Status |
+|---|---|---|---|
+| 1 | Schema and objects script | `GroupName_ProjectName_TermProject_Schema.sql` | |
+| 2 | Demonstration script | `GroupName_ProjectName_TermProject_Demo.sql` | |
+| 3 | Project document (Word or PDF) | `GroupName_ProjectName_TermProject_Report.docx` | |
+| 4 | Front-end source code, zipped (for the bonus) | `GroupName_ProjectName_TermProject_FrontEnd.zip` | |
+
+## Table Inventory — Design, Script, Demo, Owner
+
+Status of the ten numbered tables currently in this repository. "Not created" means the artefact does not exist in the repo yet; it is not an assessment of member work done elsewhere.
+
+| No. | Database table | Design | Create script | Demo script | Owner |
+|---|---|---|---|---|---|
+| 1 | `hms_rooms` | [01_rooms.md](database/design/01_rooms.md) | [01_rooms.sql](database/scripts/01_rooms.sql) | Not created | Malachi |
+| 2 | `hms_guests` | [02_guests.md](database/design/02_guests.md) | [02_guests.sql](database/scripts/02_guests.sql) | Not created | Malachi |
+| 3 | `hms_reservations` | [03_reservations.md](database/design/03_reservations.md) | [03_reservations.sql](database/scripts/03_reservations.sql) | Not created | Malachi |
+| 4 | `hms_room_allocations` | [04_room_allocations.md](database/design/04_room_allocations.md) | [04_room_allocations.sql](database/scripts/04_room_allocations.sql) | Not created | Max |
+| 5 | `hms_hotel_charges` | [05_hotel_charges.md](database/design/05_hotel_charges.md) | [05_hotel_charges.sql](database/scripts/05_hotel_charges.sql) | Not created | Max |
+| 6 | `hms_seasonal_pricing` | [06_seasonal_pricing.md](database/design/06_seasonal_pricing.md) | [06_seasonal_pricing.sql](database/scripts/06_seasonal_pricing.sql) | Not created | Nevan |
+| 7 | `hms_payments` | [07_payments.md](database/design/07_payments.md) | [07_payments.sql](database/scripts/07_payments.sql) | Not created | Nevan |
+| 8 | `hms_staff` | [08_staff.md](database/design/08_staff.md) | [08_staff.sql](database/scripts/08_staff.sql) | Not created | Jazeel |
+| 9 | `hms_housekeeping_attendance` | [09_housekeeping_attendance.md](database/design/09_housekeeping_attendance.md) | [09_housekeeping_attendance.sql](database/scripts/09_housekeeping_attendance.sql) | Not created | Jazeel |
+| 10 | `hms_audit_logs` | [10_audit_logs.md](database/design/10_audit_logs.md) | [10_audit_logs.sql](database/scripts/10_audit_logs.sql) | Not created | Jazeel |
+
+### File naming
+
+Design and script files share one rule, so each table's two files sort together and share a stem:
+
+```text
+<NN>_<table_name>.<ext>
+```
+
+- `NN` — zero-padded two-digit table number from the group PDF.
+- `table_name` — lowercase snake_case, matching the SQL object name without the `hms_` prefix.
+- `ext` — `.md` in `database/design/`, `.sql` in `database/scripts/`.
+- Lowercase letters, digits and underscores only; no spaces, capitals or `#`.
+
+Example: table 4 is designed in `database/design/04_room_allocations.md` and created by `database/scripts/04_room_allocations.sql`. Files for the remaining objects (`11_sequences.sql` onwards) use the same pattern, numbered in the execution order required by brief section 5.3.
+
+# Programming Units — Ownership and Status
+
+Covers brief sections 4.2-4.7 (10 of the project's 15 marks). Row order follows section 4; script numbering follows the execution order required by section 5.3, where functions precede procedures, which precede the package, which precedes triggers.
+
+| Task | Detail | Owner | Script | Status |
+|---|---|---|---|---|
+| Sequence | At least one. Must be used to insert sample data **and** used to update table(s). Identity columns do not satisfy this. | Nevan | `11_sequences.sql` | Not started |
+| Index 1 | On a column the application actually searches; the report must name the search this index supports. | TBC | `12_indexes.sql` | Not started |
+| Index 2 | On a different searched column. Both indexes must back a real query and not duplicate each other. | TBC | `12_indexes.sql` | Not started |
+| Trigger 1 | Audit/logging trigger: writes to the audit table when a row is inserted, updated or deleted. | Malachi | `16_triggers.sql` | Source in group PDF; not in repo |
+| Trigger 2 | Business-rule trigger: enforces a rule a constraint cannot express. Must not do the same kind of work as Trigger 1. | Malachi | `16_triggers.sql` | Source in group PDF; not in repo |
+| Procedure 1 | Uses an explicit cursor and processes multiple rows; named exception section; business errors raised with `RAISE_APPLICATION_ERROR`. | Nevan / Jazeel, split TBC | `14_procedures.sql` | Not started |
+| Procedure 2 | Validates input before applying DML; named exception section relevant to the operation. `WHEN OTHERS THEN NULL` scores zero. | Nevan / Jazeel, split TBC | `14_procedures.sql` | Not started |
+| Function 1 | Returns a scalar derived from a query (count, total, average or status); every execution path reaches `RETURN`; has an exception section. | Nevan / Jazeel, split TBC | `13_functions.sql` | Not started |
+| Function 2 | Called from the group's own code (trigger, procedure, view or check-style validation); every path reaches `RETURN`; has an exception section. | Nevan / Jazeel, split TBC | `13_functions.sql` | Not started |
+| Package | Spec and body. Exposes 2 procedures and 2 functions. Spec declares a public variable or constant; body declares a private variable or subprogram that is actually used at run time; use `%TYPE` / `%ROWTYPE`; packaged subprograms need the same exception handling. | TBC | `15_package.sql` | Not started |
 
 ## Directory Structure
 
