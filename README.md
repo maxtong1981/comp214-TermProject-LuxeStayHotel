@@ -47,18 +47,18 @@ Covers brief sections 4.2-4.7 (10 of the project's 15 marks). Row order follows 
 
 ## Schema Decisions
 
-Agreed by the table owners. Each decision is recorded here first and still has to be applied to the SQL in `database/scripts/`; until it is, the script keeps the previous definition.
+Agreed by the table owners. Recorded here first, then applied to the SQL in `database/scripts/`.
 
-| ID | Decision | Table | Implementation |
-|---|---|---|---|
-| D1 | No additional physical table. The lookup/reference-table requirement is met by classifying an existing table as reference data rather than by adding one. | Whole schema | Report argument; no SQL change |
-| D2 | `room_type` is constrained to a fixed value list instead of being free text. The owner of `hms_rooms` supplies the values. | `hms_rooms` | `CHECK (room_type IN (...))` |
-| D3 | `amount_due` is to be calculated by a business-rule trigger rather than entered by hand. Deferred: until that trigger exists, values are entered manually. | `hms_hotel_charges` | New trigger, deferred |
-| D4 | Overlapping allocations for the same room are blocked by a business-rule trigger, since no constraint can compare rows. | `hms_room_allocations` | New trigger |
-| D5 | `pos_transaction_reference` is UNIQUE: one POS transaction produces one charge. Nullable, so unlinked charges are still allowed. | `hms_hotel_charges` | `UNIQUE` |
-| D6 | `allocation_validation_status` is dropped. It duplicated `allocation_status` and carried no value list. | `hms_room_allocations` | Remove column |
-| D7 | `pos_transaction_reference` stays a soft reference with no foreign key, because no POS table exists in the schema. | `hms_hotel_charges` | Report argument; no SQL change |
-| D8 | *Open:* `applicable_discounts` in `hms_reservations` and `applicable_discount` in `hms_hotel_charges` need one spelling. | Both | TBC |
+| ID | Decision | Table | Implementation | Status |
+|---|---|---|---|---|
+| D1 | No additional physical table. The lookup/reference-table requirement is met by classifying an existing table as reference data rather than by adding one. | Whole schema | Report argument; no SQL change | Open risk |
+| D2 | `room_type` is constrained to a fixed value list instead of being free text. The owner of `hms_rooms` supplies the values. | `hms_rooms` | `CHECK (room_type IN (...))` | Pending |
+| D3 | `amount_due` is to be calculated by a business-rule trigger rather than entered by hand. Until that trigger exists, values are entered manually. | `hms_hotel_charges` | New trigger | Pending |
+| D4 | Overlapping allocations for the same room are blocked by a business-rule trigger, since no constraint can compare rows. | `hms_room_allocations` | New trigger | Pending |
+| D5 | `pos_transaction_reference` is UNIQUE: one POS transaction produces one charge. Nullable, so unlinked charges are still allowed. | `hms_hotel_charges` | `CONSTRAINT uq_hms_charge_pos_txn UNIQUE` | Applied |
+| D6 | `allocation_validation_status` is dropped. It duplicated `allocation_status` and carried no value list. | `hms_room_allocations` | Column removed | Applied |
+| D7 | `pos_transaction_reference` stays a soft reference with no foreign key, because no POS table exists in the schema. | `hms_hotel_charges` | Report argument; no SQL change | Decided |
+| D8 | *Open:* `applicable_discounts` in `hms_reservations` and `applicable_discount` in `hms_hotel_charges` need one spelling. | Both | TBC | Undecided |
 
 ### Consequences to plan for
 

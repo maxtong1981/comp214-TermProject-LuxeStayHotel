@@ -21,6 +21,5 @@ CREATE TABLE hms_room_allocations (
     room_reassignment_information      VARCHAR2(4000),
     reassignment_reason                VARCHAR2(4000),
     previous_room_reference            NUMBER           REFERENCES hms_rooms(room_id),
-    allocation_validation_status       VARCHAR2(50)     NOT NULL,
     CONSTRAINT chk_hms_alloc_dates CHECK (allocation_end_date > allocation_start_date)
 );

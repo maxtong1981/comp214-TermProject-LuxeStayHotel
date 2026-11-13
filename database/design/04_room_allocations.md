@@ -28,7 +28,6 @@ Field names, purposes, and status examples come from the PDF. Data types, length
 | `room_reassignment_information` | `VARCHAR2(4000)` | Nullable; no explicit default or other column constraint. | Details of room changes during a stay. |
 | `reassignment_reason` | `VARCHAR2(4000)` | Nullable; no explicit default or other column constraint. | Reason for changing the assigned room. |
 | `previous_room_reference` | `NUMBER` | REFERENCES hms_rooms(room_id) | Previously assigned room, if reassigned. |
-| `allocation_validation_status` | `VARCHAR2(50)` | NOT NULL | Indicates whether availability and overlap checks passed. |
 
 For the seven newly drafted tables, all implementation choices in the type and constraint columns require group review.
 
@@ -45,10 +44,10 @@ Proposed table-level constraint: `chk_hms_alloc_dates` requires `allocation_end_
 - Date order is checked; cross-row overlap prevention is not implemented by this table DDL.
 - Required reference/date/status fields and optional reassignment details are proposed choices.
 
-## Decided changes (not yet applied to the SQL)
+## Decided changes
 
-- **D6:** `allocation_validation_status` is to be dropped. It duplicated `allocation_status` and its value list was never defined. The field table above still lists it until the script is edited.
-- **D4:** cross-row overlap for the same room is to be blocked by a business-rule trigger, since no constraint can compare rows. The trigger, not this table, becomes the mechanism that prevents double booking.
+- **D6 — applied to the script.** `allocation_validation_status` was dropped: it duplicated `allocation_status` and its value list was never defined. No column now records whether an availability check ran; the trigger in D4 is the only mechanism.
+- **D4 — pending.** Cross-row overlap for the same room is to be blocked by a business-rule trigger, since no constraint can compare rows. Until it exists, double booking is only prevented by the application.
 
 ## Handoff checklist
 

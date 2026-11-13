@@ -29,7 +29,7 @@ Field names, purposes, and status examples come from the PDF. Data types, length
 | `amount_due` | `NUMBER(10,2)` | NOT NULL CHECK (amount_due >= 0) | Final amount charged after adjustments. |
 | `unit_price` | `NUMBER(10,2)` | NOT NULL CHECK (unit_price >= 0) | Price per unit of service or item. |
 | `service_location` | `VARCHAR2(100)` | Nullable; no explicit default or other column constraint. | Restaurant, Spa, Room Service, or another department. |
-| `pos_transaction_reference` | `VARCHAR2(100)` | Nullable; no explicit default or other column constraint. | Reference to the corresponding POS transaction. |
+| `pos_transaction_reference` | `VARCHAR2(100)` | Nullable; `CONSTRAINT uq_hms_charge_pos_txn UNIQUE`; no default | Reference to the corresponding POS transaction. One POS transaction maps to one charge; multiple NULLs are allowed for charges with no POS link. |
 | `charge_description` | `VARCHAR2(4000)` | Nullable; no explicit default or other column constraint. | Description of the service or purchase. |
 
 For the seven newly drafted tables, all implementation choices in the type and constraint columns require group review.
@@ -43,10 +43,10 @@ For the seven newly drafted tables, all implementation choices in the type and c
 - applicable_discount is stored as descriptive text because the source does not define amount versus percentage.
 - The DDL stores charge values; it does not calculate amounts, discounts, or POS integration.
 
-## Decided changes (not yet applied to the SQL)
+## Decided changes
 
-- **D5:** `pos_transaction_reference` is to be UNIQUE — one POS transaction produces one charge. The column stays nullable, so charges without a POS link are still allowed. Until the script is edited, the field table above shows no unique constraint.
-- **D3:** `amount_due` is to be calculated by a business-rule trigger from quantity, unit price and discount instead of being entered by hand. Deferred: until that trigger exists, values are entered manually and nothing keeps them consistent.
+- **D5 — applied to the script.** `pos_transaction_reference` is now UNIQUE (`uq_hms_charge_pos_txn`). The column stays nullable, so any number of charges may have no POS link while a given POS transaction can back only one charge.
+- **D3 — pending.** `amount_due` is to be calculated by a business-rule trigger from quantity, unit price and discount instead of being entered by hand. Until that trigger exists, values are entered manually and nothing keeps them consistent.
 
 ## Handoff checklist
 

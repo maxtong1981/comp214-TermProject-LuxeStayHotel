@@ -23,5 +23,6 @@ CREATE TABLE hms_hotel_charges (
     unit_price                         NUMBER(10,2)     NOT NULL CHECK (unit_price >= 0),
     service_location                   VARCHAR2(100),
     pos_transaction_reference          VARCHAR2(100),
-    charge_description                 VARCHAR2(4000)
+    charge_description                 VARCHAR2(4000),
+    CONSTRAINT uq_hms_charge_pos_txn UNIQUE (pos_transaction_reference)
 );
