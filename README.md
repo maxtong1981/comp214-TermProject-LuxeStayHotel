@@ -27,22 +27,8 @@ Status of the ten numbered tables currently in this repository. "Not created" me
 | 9 | `hms_housekeeping_attendance` | [09_housekeeping_attendance.md](database/design/09_housekeeping_attendance.md) | [09_housekeeping_attendance.sql](database/scripts/09_housekeeping_attendance.sql) | Not created | Jazeel |
 | 10 | `hms_audit_logs` | [10_audit_logs.md](database/design/10_audit_logs.md) | [10_audit_logs.sql](database/scripts/10_audit_logs.sql) | Not created | Jazeel |
 
-### File naming
 
-Design and script files share one rule, so each table's two files sort together and share a stem:
-
-```text
-<NN>_<table_name>.<ext>
-```
-
-- `NN` — zero-padded two-digit table number from the group PDF.
-- `table_name` — lowercase snake_case, matching the SQL object name without the `hms_` prefix.
-- `ext` — `.md` in `database/design/`, `.sql` in `database/scripts/`.
-- Lowercase letters, digits and underscores only; no spaces, capitals or `#`.
-
-Example: table 4 is designed in `database/design/04_room_allocations.md` and created by `database/scripts/04_room_allocations.sql`. Files for the remaining objects (`11_sequences.sql` onwards) use the same pattern, numbered in the execution order required by brief section 5.3.
-
-# Programming Units — Ownership and Status
+## Programming Units — Ownership and Status
 
 Covers brief sections 4.2-4.7 (10 of the project's 15 marks). Row order follows section 4; script numbering follows the execution order required by section 5.3, where functions precede procedures, which precede the package, which precedes triggers.
 
