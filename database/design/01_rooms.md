@@ -41,6 +41,10 @@ No foreign key is declared in this CREATE TABLE statement.
 - Uses the HMS-prefixed SQL version on page 11; earlier unprefixed versions remain in the PDF.
 - Room type is text in the supplied DDL and is not a unique reference key.
 
+## Decided changes (not yet applied to the SQL)
+
+- **D2:** `room_type` is to be constrained to a fixed value list instead of free text, so that room types cannot drift apart between rows. The owner of this table supplies the values. Until the script is edited, the field table above still describes the current free-text definition.
+
 ## Handoff checklist
 
 - [ ] Owner confirms the maintained source version and proposed choices, where applicable.

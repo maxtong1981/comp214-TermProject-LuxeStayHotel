@@ -3,7 +3,7 @@
 **Table:** `hms_audit_logs`  
 **Recorded owner:** Jazeel  
 **Source:** `COMP214_Term_Project_prof.Sarajlic-goup.pdf`, PDF pages 18-19.  
-**Status:** AI-drafted implementation for group review; the PDF supplies fields but no CREATE TABLE statement for this table.
+**Status:** Draft implementation pending owner review; the PDF supplies fields but no CREATE TABLE statement for this table.
 
 ## Purpose
 

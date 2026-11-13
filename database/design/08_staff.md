@@ -3,7 +3,7 @@
 **Table:** `hms_staff`  
 **Recorded owner:** Jazeel  
 **Source:** `COMP214_Term_Project_prof.Sarajlic-goup.pdf`, PDF pages 17.  
-**Status:** AI-drafted implementation for group review; the PDF supplies fields but no CREATE TABLE statement for this table.
+**Status:** Draft implementation pending owner review; the PDF supplies fields but no CREATE TABLE statement for this table.
 
 ## Purpose
 

@@ -43,6 +43,11 @@ For the seven newly drafted tables, all implementation choices in the type and c
 - applicable_discount is stored as descriptive text because the source does not define amount versus percentage.
 - The DDL stores charge values; it does not calculate amounts, discounts, or POS integration.
 
+## Decided changes (not yet applied to the SQL)
+
+- **D5:** `pos_transaction_reference` is to be UNIQUE — one POS transaction produces one charge. The column stays nullable, so charges without a POS link are still allowed. Until the script is edited, the field table above shows no unique constraint.
+- **D3:** `amount_due` is to be calculated by a business-rule trigger from quantity, unit price and discount instead of being entered by hand. Deferred: until that trigger exists, values are entered manually and nothing keeps them consistent.
+
 ## Handoff checklist
 
 - [ ] Owner confirms the maintained source version and proposed choices, where applicable.

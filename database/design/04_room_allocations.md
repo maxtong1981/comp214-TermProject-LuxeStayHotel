@@ -45,6 +45,11 @@ Proposed table-level constraint: `chk_hms_alloc_dates` requires `allocation_end_
 - Date order is checked; cross-row overlap prevention is not implemented by this table DDL.
 - Required reference/date/status fields and optional reassignment details are proposed choices.
 
+## Decided changes (not yet applied to the SQL)
+
+- **D6:** `allocation_validation_status` is to be dropped. It duplicated `allocation_status` and its value list was never defined. The field table above still lists it until the script is edited.
+- **D4:** cross-row overlap for the same room is to be blocked by a business-rule trigger, since no constraint can compare rows. The trigger, not this table, becomes the mechanism that prevents double booking.
+
 ## Handoff checklist
 
 - [ ] Owner confirms the maintained source version and proposed choices, where applicable.

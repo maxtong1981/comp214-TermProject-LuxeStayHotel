@@ -45,20 +45,39 @@ Covers brief sections 4.2-4.7 (10 of the project's 15 marks). Row order follows 
 | Function 2 | Called from the group's own code (trigger, procedure, view or check-style validation); every path reaches `RETURN`; has an exception section. | Nevan / Jazeel, split TBC | `13_functions.sql` | Not started |
 | Package | Spec and body. Exposes 2 procedures and 2 functions. Spec declares a public variable or constant; body declares a private variable or subprogram that is actually used at run time; use `%TYPE` / `%ROWTYPE`; packaged subprograms need the same exception handling. | TBC | `15_package.sql` | Not started |
 
+## Schema Decisions
+
+Agreed by the table owners. Each decision is recorded here first and still has to be applied to the SQL in `database/scripts/`; until it is, the script keeps the previous definition.
+
+| ID | Decision | Table | Implementation |
+|---|---|---|---|
+| D1 | No additional physical table. The lookup/reference-table requirement is met by classifying an existing table as reference data rather than by adding one. | Whole schema | Report argument; no SQL change |
+| D2 | `room_type` is constrained to a fixed value list instead of being free text. The owner of `hms_rooms` supplies the values. | `hms_rooms` | `CHECK (room_type IN (...))` |
+| D3 | `amount_due` is to be calculated by a business-rule trigger rather than entered by hand. Deferred: until that trigger exists, values are entered manually. | `hms_hotel_charges` | New trigger, deferred |
+| D4 | Overlapping allocations for the same room are blocked by a business-rule trigger, since no constraint can compare rows. | `hms_room_allocations` | New trigger |
+| D5 | `pos_transaction_reference` is UNIQUE: one POS transaction produces one charge. Nullable, so unlinked charges are still allowed. | `hms_hotel_charges` | `UNIQUE` |
+| D6 | `allocation_validation_status` is dropped. It duplicated `allocation_status` and carried no value list. | `hms_room_allocations` | Remove column |
+| D7 | `pos_transaction_reference` stays a soft reference with no foreign key, because no POS table exists in the schema. | `hms_hotel_charges` | Report argument; no SQL change |
+| D8 | *Open:* `applicable_discounts` in `hms_reservations` and `applicable_discount` in `hms_hotel_charges` need one spelling. | Both | TBC |
+
+### Consequences to plan for
+
+- **D1 is the weakest decision.** The brief's own marking checklist reads "5–10 tables, including a lookup table and an audit/log table", so the report has to argue convincingly which existing table is reference data. Pick that table deliberately; "we are at the table limit" is not an argument the marker is required to accept.
+- **Three triggers, not two.** An audit trigger (already in the group PDF) plus D3 and D4 gives three. That satisfies section 4.4 but means three triggers x three screenshots each (before / firing DML / after) = nine evidence images.
+- **D6 breaks cross-references.** Any ER diagram, table description, or demonstration script that mentions `allocation_validation_status` has to be updated in the same pass.
+- **D3 and D6 interact.** Once `allocation_validation_status` is gone, nothing in the schema records whether an availability check ran; the D4 trigger becomes the only mechanism, so its exception message has to carry that meaning.
+
 ## Directory Structure
 
 ```text
 .
 ├── database/
 │   ├── design/
-│   ├── scripts/
-│   └── README.md
+│   └── scripts/
 ├── docs/
 │   ├── evidence/
-│   ├── submission/
-│   └── contributions.md
+│   └── submission/
 ├── website/
-│   └── README.md
 ├── LICENSE
 └── README.md
 ```
@@ -69,12 +88,10 @@ Covers brief sections 4.2-4.7 (10 of the project's 15 marks). Row order follows 
 |---|---|---|
 | `database/design/` | Database design documentation | ER diagram source files and exported images, table and column descriptions, constraints, business rules, and programming unit descriptions |
 | `database/scripts/` | Executable database files | Setup and cleanup scripts, table definitions, sample data, sequences, indexes, functions, procedures, packages, triggers, and demonstration scripts |
-| `database/README.md` | Database setup instructions | Required environment, connection setup without passwords, script execution order, and instructions for running demonstrations |
 | `docs/evidence/` | Evidence of execution | Screenshots and matching text output from database tests and website demonstrations |
 | `docs/submission/` | Final submission files | Final schema script, demonstration script, report, and website source archive, using the filenames required by the assignment |
-| `docs/contributions.md` | Contribution record | Each member’s completed work, including implementation, testing, documentation, and demonstrations |
 | `website/` | Website implementation | Website source code, assets, and configuration examples |
-| `website/README.md` | Website setup instructions | Required tools, installation steps, local configuration, and instructions for starting the website |
+| [`website/README.md`](website/README.md) | Website setup instructions | Required tools, installation steps, local configuration, and instructions for starting the website |
 | `README.md` | Main project guide | Project overview, directory guide, and links to important resources |
 | `LICENSE` | Repository licensing terms | The license applicable to this repository |
 
@@ -85,7 +102,7 @@ Covers brief sections 4.2-4.7 (10 of the project's 15 marks). Row order follows 
 - Keep design explanations in `database/design/` and executable SQL in `database/scripts/`.
 - Update the relevant design documents whenever the database structure changes.
 - Save both the editable ER diagram and an exported image for easy viewing.
-- Document the script execution order in `database/README.md`.
+- Document the script execution order in this README.
 - Verify that the setup scripts work on a clean schema and can be run again.
 
 ### Execution Evidence
@@ -97,8 +114,8 @@ Covers brief sections 4.2-4.7 (10 of the project's 15 marks). Row order follows 
 
 ### Documentation and Contributions
 
-- Update `docs/contributions.md` as work is completed.
-- Describe actual contributions clearly, including testing and review work.
+- Record each member's completed work as it happens, including implementation, testing, documentation, and demonstrations.
+- Describe actual contributions clearly; the contribution statement has to survive cross-examination at the presentation.
 - If the report is edited in a shared online document, add its link below and use that document as the single working copy.
 
 ### Final Submission
@@ -120,19 +137,5 @@ Covers brief sections 4.2-4.7 (10 of the project's 15 marks). Row order follows 
 - **Task board:** To be added
 - **Submission deadline:** Confirm on the LMS
 - **Presentation date:** Confirm on the LMS
-
-## Planning Documents
-
-- [Existing work and remaining verification](docs/progress-review.md)
-
-- [Planning index](docs/README.md)
-- [Project scope and milestones](docs/project-plan.md)
-- [Task tracker](docs/tasks.md)
-- [Assignment requirements checklist](docs/requirements-checklist.md)
-- [Work preferences and verified contributions](docs/contributions.md)
-- [Database work guide](database/README.md)
-- [Database design work plan](database/design/README.md)
-- [SQL script guide](database/scripts/README.md)
-- [Website work guide](website/README.md)
-- [Execution evidence guide](docs/evidence/README.md)
-- [Final submission guide](docs/submission/README.md)
+- **Assignment brief:** [docs/COMP214_Term_Project_prof.Sarajlic.pdf](docs/COMP214_Term_Project_prof.Sarajlic.pdf)
+- **Website setup:** [website/README.md](website/README.md)

@@ -1,11 +1,12 @@
 /*
-Members: Wei 
+Group: TBD (confirm the registered group name)
+Members: Malachi, Nevan, Jazeel, Wei (confirm full names and student IDs)
 File: 04_room_allocations.sql
 Table: hms_room_allocations
 Source: COMP214_Term_Project_prof.Sarajlic-goup.pdf, PDF pages 14-15
-Recorded table owner: Not specified in the group notes
-Status: AI-drafted implementation for group review; the PDF supplies fields but no CREATE TABLE statement for this table.
-Provenance: Field names, purposes, and status examples come from the PDF. Data types, lengths, nullability, defaults, key implementation, and constraints are proposed choices, not source SQL or verified group decisions.
+Recorded table owner: Max
+Status: Draft implementation; the table owner is to confirm the proposed field choices before submission.
+Provenance: Field names, purposes, and status examples come from the PDF. Data types, lengths, nullability, defaults, key implementation, and constraints are proposed choices awaiting owner confirmation.
 Prerequisites: hms_reservations, hms_rooms
 Scope: table DDL only; no data, cleanup, triggers, or execution proof.
 */

@@ -5,7 +5,7 @@ File: 08_staff.sql
 Table: hms_staff
 Source: COMP214_Term_Project_prof.Sarajlic-goup.pdf, PDF pages 17
 Recorded table owner: Jazeel
-Status: AI-drafted implementation for group review; the PDF supplies fields but no CREATE TABLE statement for this table.
+Status: Draft implementation pending owner review; the PDF supplies fields but no CREATE TABLE statement for this table.
 Provenance: Field names, purposes, and status examples come from the PDF. Data types, lengths, nullability, defaults, key implementation, and constraints are proposed choices, not source SQL or verified group decisions.
 Prerequisites: None outside this table
 Scope: table DDL only; no data, cleanup, triggers, or execution proof.
